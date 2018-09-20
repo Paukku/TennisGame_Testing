@@ -20,8 +20,9 @@ public class TennisGameTest {
 // "player2 has advantage"
 // "player1 wins"
 // "player2 wins"
-	@Ignore
+	@Test
 	public void testTennisGame_Start() {
+		//Both have zero points
 		//Arrange
 		TennisGame game = new TennisGame();
 		//Act
@@ -62,6 +63,32 @@ public class TennisGameTest {
 		game.player1Scored();
 		//Act
 		// This statement should cause an exception
-		game.player1Scored();			
-	}		
+		game.player1Scored();
+		String score = game.getScore();
+		
+		
+		//TÄMÄ EI TOIMI VIELÄ OIKEIN!!!!!!!
+		//Assert
+		assertEquals("Game has already ended. Player 1 can't get a point", "Game end", score);
+	}
+	
+	@Test (expected = TennisGameException.class)
+	public void testTennisGame_Player2WinsPointAfterGameEnded_ResultsException() throws TennisGameException {
+		//Arrange
+		TennisGame game = new TennisGame();
+		//Act
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		//Act
+		// This statement should cause an exception
+		//TÄMÄ EI TOIMI VIELÄ OIKEIN!!!!!!!
+		game.player2Scored();
+		String score = game.getScore();
+		
+		//Assert
+		assertEquals("Game has already ended.  Player 2 can't get a point", "Game end", score);
+	}
+	
 }
