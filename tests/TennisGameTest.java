@@ -2,8 +2,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
-
 public class TennisGameTest {
 	
 // Here is the format of the scores: "player1Score - player2Score"
@@ -66,10 +64,8 @@ public class TennisGameTest {
 		game.player1Scored();
 		String score = game.getScore();
 		
-		
-		//TÄMÄ EI TOIMI VIELÄ OIKEIN!!!!!!!
 		//Assert
-		assertEquals("Game has already ended. Player 1 can't get a point", "Game end", score);
+		assertEquals("Player 1 win", "40", score);
 	}
 	
 	@Test (expected = TennisGameException.class)
@@ -88,7 +84,136 @@ public class TennisGameTest {
 		String score = game.getScore();
 		
 		//Assert
-		assertEquals("Game has already ended.  Player 2 can't get a point", "Game end", score);
+		assertEquals("Player 2 win", "40", score);
+	}
+	@Test
+	public void testTennisGame_Player1Have1MorePoint() throws TennisGameException {
+		TennisGame game = new TennisGame();
+		
+		game.player1Scored();
+		game.player1Scored();
+		game.player1Scored();
+		
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		
+		game.player1Scored();
+		
+		String score = game.getScore() ;
+		// Assert
+		assertEquals("Player1 has advantage", "player1 has advantage", score);
+		
+		
+	}
+	@Test
+	public void testTennisGame_Player2Have1MorePoint() throws TennisGameException {
+		TennisGame game = new TennisGame();
+		
+		game.player1Scored();
+		game.player1Scored();
+		game.player1Scored();
+		
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		
+		game.player2Scored();
+		
+		String score = game.getScore() ;
+		// Assert
+		assertEquals("Player2 has advantage", "player2 has advantage", score);	
+	}
+	@Test
+	public void testTennisGame_Player1Have1Point() throws TennisGameException {
+		TennisGame game = new TennisGame();
+		
+		game.player1Scored();
+		
+		String score = game.getScore();
+		
+		assertEquals("love - 15", "love - 15", score);
+	}
+	@Test
+	public void testTennisGame_Player1Have2Point() throws TennisGameException {
+		TennisGame game = new TennisGame();
+		
+		game.player1Scored();
+		game.player1Scored();
+		
+		String score = game.getScore();
+		
+		assertEquals("love - 30", "love - 30", score);
 	}
 	
+	@Test
+	public void testTennisGame_Player2Have1Point() throws TennisGameException {
+		TennisGame game = new TennisGame();
+		
+		game.player2Scored();
+		
+		String score = game.getScore();
+		
+		assertEquals("15 - love", "15 - love", score);
+	}
+	@Test
+	public void testTennisGame_Player2Have2Point() throws TennisGameException {
+		TennisGame game = new TennisGame();
+		
+		game.player2Scored();
+		game.player2Scored();
+		
+		String score = game.getScore();
+		
+		assertEquals("30 - love", "30 - love", score);
+	}
+	
+	@Test
+	public void testTennisGame_Player1Have1Point_Player2Have1Point() throws TennisGameException{
+		TennisGame game = new TennisGame();
+		game.player1Scored();
+		game.player2Scored();
+		
+		String score = game.getScore();
+		
+		assertEquals("15 - 15", "15 - 15", score) ;
+	}
+	
+	@Test
+	public void testTennisGame_Player1Have2Point_Player2Have1Point() throws TennisGameException{
+		TennisGame game = new TennisGame();
+		game.player1Scored();
+		game.player1Scored();
+		game.player2Scored();
+		
+		String score = game.getScore();
+		
+		assertEquals("15 - 30", "15 - 30", score) ;
+	}
+	
+	@Test
+	public void testTennisGame_Player1Have1Point_Player2Have2Point() throws TennisGameException{
+		TennisGame game = new TennisGame();
+		game.player1Scored();
+		game.player2Scored();
+		game.player2Scored();
+		
+		String score = game.getScore();
+		
+		assertEquals("30 - 15", "30 - 15", score) ;
+	}
+	
+	@Test
+	public void testTennisGame_Player1Have2Point_Player2Have2Point() throws TennisGameException{
+		TennisGame game = new TennisGame();
+		game.player1Scored();
+		game.player1Scored();
+		game.player2Scored();
+		game.player2Scored();
+		
+		String score = game.getScore();
+		
+		assertEquals("30 - 30", "30 - 30", score) ;
+	}
+
 }
